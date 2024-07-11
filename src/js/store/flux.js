@@ -12,7 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			listaDeContactos: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -28,6 +29,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//get the store
 				const store = getStore();
 
+				//guardarContactos	
+
 				//we have to loop the entire demo array to look for the respective index
 				//and change its color
 				const demo = store.demo.map((elm, i) => {
@@ -37,7 +40,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			obtenerListaDeContactos: () => {
+				fetch('https://playground.4geeks.com/contact/agendas/Vero519/contacts', {
+					method: 'GET',
+					headers: { "Content-Type": "application/json" }
+				})
+					//.then((respose) => respose.json())
+					.then((response) => {
+						if (response.status == 404) {
+							// crearAgenda()
+							return false
+						}
+						return response.json()
+					})
+					.then((data) => {
+						if (data) {
+							// setStore({propiedad:valor})
+							setStore({listaDeContactos:data.contacts})
+						}
+					})
+					.catch((error) => console.log(error))
+			},
 		}
 	};
 };
