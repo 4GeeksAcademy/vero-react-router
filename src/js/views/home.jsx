@@ -7,22 +7,6 @@
 // 	let [contacto, setContacto] = useState("")
 // 	let [listaDeContactos, setListaDeContactos] = useState([])
 
-// 	//Crear Contacto
-// 	function crearAgenda() {
-
-// 		fetch('https://playground.4geeks.com/contact/agendas/Vero519', {
-// 			method: 'POST',
-// 			headers: {
-// 				"Content-Type": "application/json"
-// 			},
-
-// 		})
-// 			.then((respose) => {
-// 				return respose.json()
-// 			})
-// 			.then((data) => console.log(data))
-// 			.catch((error) => console.log(error))
-// 	}
 
 // 	//GUARDAR CONTACTO
 // 	function guardarContactos() {

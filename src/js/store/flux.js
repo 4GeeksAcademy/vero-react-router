@@ -50,20 +50,67 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((response) => {
 						if (response.status == 404) {
 							// crearAgenda()
-							return false
+							getActions().crearAgenda()
 						}
 						return response.json()
 					})
 					.then((data) => {
 						if (data) {
 							// setStore({propiedad:valor})
-							setStore({listaDeContactos:data.contacts})
+							setStore({ listaDeContactos: data.contacts })
 						}
 					})
 					.catch((error) => console.log(error))
 			},
+			// 	//Crear Contacto
+			crearAgenda: () => {
+
+				fetch('https://playground.4geeks.com/contact/agendas/Vero519', {
+					method: 'POST',
+					headers: { "Content-Type": "application/json" }
+				})
+					.then((respose) => {
+						return respose.json()
+					})
+					.then((data) => console.log(data))
+					.catch((error) => console.log(error))
+			},
+			// 	//GUARDAR CONTACTO
+			guardarContacto: (name, address, email, phone) => {
+				const store = getStore()
+
+				fetch('https://playground.4geeks.com/contact/agendas/Vero519/contacts', {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"name": name,
+						"phone": phone,
+						"email": email,
+						"address": address,
+					})
+
+				})
+
+					.then((response) => {
+						if (response.ok) {
+							return response.json()
+						}
+						return null
+					})
+					.then((data) => {
+						if (data) {
+							// setStore({propiedad:valor})
+							setStore({ listaDeContactos: store.listaDeContactos.concat(data) })
+						}
+					})
+					.catch((error) => console.log(error))
+			}
+
+
 		}
-	};
+	}
 };
 
-export default getState;
+export default getState
